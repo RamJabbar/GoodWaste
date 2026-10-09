@@ -68,6 +68,7 @@ export default function ScanActionPage() {
     if (file) {
       processSelectedFile(file);
     }
+    e.target.value = '';
   };
 
   const processSelectedFile = async (file: File) => {

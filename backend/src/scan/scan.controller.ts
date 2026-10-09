@@ -10,7 +10,7 @@ import { ScanService } from './scan.service';
 
 @Controller('api/scan')
 export class ScanController {
-  constructor(private readonly scanService: ScanService) {}
+  constructor(private readonly scanService: ScanService) { }
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('image'))

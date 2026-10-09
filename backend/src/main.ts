@@ -11,12 +11,16 @@ async function bootstrap() {
 
   // Mengaktifkan CORS agar frontend Next.js dapat berinteraksi tanpa hambatan
   app.enableCors({
-    origin: '*',
+    origin: [
+      'http://localhost:3000',
+      'http://127.0.0.1:3000',
+      'http://localhost:3001',
+    ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
   });
 
-  const port = process.env.PORT || 3001;
+  const port = process.env.PORT ?? 3001;
   await app.listen(port);
   logger.log(`🌿 GoodWaste Backend API berjalan di http://localhost:${port}`);
 }
