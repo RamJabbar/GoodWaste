@@ -72,24 +72,24 @@ export default function MapPage() {
   return (
     <div className="space-y-6">
       {/* Header Halaman Peta */}
-      <div className="bg-white border border-slate-200 rounded-lg p-5">
+      <div className="relative overflow-hidden bg-white/90 border border-[#e2e6d8] rounded-2xl p-6 shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 mb-2">
-              <MapPin className="w-3 h-3 text-emerald-700" />
+            <div className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200 mb-2">
+              <MapPin className="w-3.5 h-3.5 text-emerald-600" />
               Jaringan Titik Buang Terdekat
             </div>
-            <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+            <h1 className="text-xl sm:text-2xl font-extrabold text-forest-950 tracking-tight">
               Peta Lokasi TPS & Bank Sampah
             </h1>
-            <p className="text-xs sm:text-sm text-slate-600 mt-1">
+            <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-xl leading-relaxed">
               Temukan bank sampah berbayar dan TPS 3R terdekat untuk menyalurkan barang daur ulang Anda.
             </p>
           </div>
 
           {/* Indikator Status Titik */}
           <div className="flex items-center gap-2">
-            <span className="text-xs font-medium text-slate-500 bg-slate-50 px-3 py-1.5 rounded border border-slate-200">
+            <span className="text-xs font-bold text-forest-900 bg-[#f4f6ee] px-3.5 py-2 rounded-xl border border-[#dde1d3]">
               {filteredPoints.length} Titik Teridentifikasi
             </span>
           </div>
@@ -97,7 +97,7 @@ export default function MapPage() {
       </div>
 
       {/* Peta Interaktif Google Maps */}
-      <div className="bg-white border border-slate-200 rounded-lg p-3">
+      <div className="bg-white border border-[#e2e6d8] rounded-2xl p-3 shadow-xs overflow-hidden">
         <MapView
           dropPoints={filteredPoints}
           selectedPoint={selectedPoint}
@@ -108,17 +108,17 @@ export default function MapPage() {
       </div>
 
       {/* Filter & Kontrol Pencarian */}
-      <div className="bg-white border border-slate-200 rounded-lg p-4">
+      <div className="bg-white border border-[#e2e6d8] rounded-2xl p-4 shadow-xs">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
           {/* Kolom Pencarian */}
           <div className="relative w-full sm:w-80">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Cari lokasi, jenis sampah, atau jalan..."
-              className="w-full text-xs bg-slate-50 border border-slate-300 rounded pl-9 pr-3 py-2 text-slate-900 placeholder:text-slate-400 focus:bg-white"
+              className="w-full text-xs bg-[#f8f9f5] border border-[#d8dcc8] rounded-xl pl-9 pr-3.5 py-2.5 text-forest-950 placeholder:text-slate-400 focus:bg-white focus:border-emerald-500 transition-colors"
             />
           </div>
 
@@ -126,30 +126,30 @@ export default function MapPage() {
           <div className="flex items-center gap-1.5 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">
             <button
               onClick={() => setFilterType('ALL')}
-              className={`text-xs font-semibold px-3 py-1.5 rounded transition-colors whitespace-nowrap ${
+              className={`text-xs font-bold px-3.5 py-2 rounded-xl transition-all whitespace-nowrap ${
                 filterType === 'ALL'
-                  ? 'bg-emerald-600 text-white'
-                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                  ? 'bg-emerald-600 text-white shadow-xs'
+                  : 'bg-[#f4f6ee] text-slate-700 hover:bg-[#e8ece0]'
               }`}
             >
               Semua Titik
             </button>
             <button
               onClick={() => setFilterType('BANK_SAMPAH')}
-              className={`text-xs font-semibold px-3 py-1.5 rounded transition-colors whitespace-nowrap ${
+              className={`text-xs font-bold px-3.5 py-2 rounded-xl transition-all whitespace-nowrap ${
                 filterType === 'BANK_SAMPAH'
-                  ? 'bg-emerald-600 text-white'
-                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                  ? 'bg-emerald-600 text-white shadow-xs'
+                  : 'bg-[#f4f6ee] text-slate-700 hover:bg-[#e8ece0]'
               }`}
             >
               Bank Sampah
             </button>
             <button
               onClick={() => setFilterType('TPS_3R')}
-              className={`text-xs font-semibold px-3 py-1.5 rounded transition-colors whitespace-nowrap ${
+              className={`text-xs font-bold px-3.5 py-2 rounded-xl transition-all whitespace-nowrap ${
                 filterType === 'TPS_3R'
-                  ? 'bg-sky-600 text-white'
-                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                  ? 'bg-emerald-600 text-white shadow-xs'
+                  : 'bg-[#f4f6ee] text-slate-700 hover:bg-[#e8ece0]'
               }`}
             >
               TPS 3R
@@ -157,6 +157,7 @@ export default function MapPage() {
           </div>
         </div>
       </div>
+
 
       {/* Grid: Daftar Titik Terdekat & Panel Detail */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -181,25 +182,25 @@ export default function MapPage() {
                 <div
                   key={point.id}
                   onClick={() => setSelectedPoint(point)}
-                  className={`bg-white border rounded-lg p-4 cursor-pointer transition-colors ${
+                  className={`bg-white border rounded-2xl p-4 cursor-pointer transition-all ${
                     isSelected
-                      ? 'border-emerald-600 bg-emerald-50/20 ring-1 ring-emerald-500'
-                      : 'border-slate-200 hover:border-slate-300'
+                      ? 'border-emerald-500 bg-emerald-50/30 ring-1 ring-emerald-500 shadow-xs'
+                      : 'border-[#e2e6d8] hover:border-emerald-300 hover:shadow-2xs'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <div className="flex items-center gap-2">
                         <span
-                          className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${
+                          className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${
                             point.type === 'BANK_SAMPAH'
                               ? 'bg-emerald-100 text-emerald-800'
-                              : 'bg-sky-100 text-sky-800'
+                              : 'bg-teal-100 text-teal-800'
                           }`}
                         >
                           {point.type === 'BANK_SAMPAH' ? 'Bank Sampah' : 'TPS 3R'}
                         </span>
-                        <h3 className="text-sm font-bold text-slate-900">{point.name}</h3>
+                        <h3 className="text-sm font-bold text-forest-950">{point.name}</h3>
                       </div>
                       <p className="text-xs text-slate-600 mt-1 leading-relaxed">
                         {point.address}
@@ -208,16 +209,16 @@ export default function MapPage() {
 
                     {/* Indikator Jarak */}
                     <div className="text-right flex-shrink-0">
-                      <span className="inline-block bg-slate-900 text-white font-bold text-xs px-2.5 py-1 rounded">
+                      <span className="inline-block bg-forest-900 text-white font-bold text-xs px-2.5 py-1 rounded-lg">
                         {point.formattedDistance}
                       </span>
                     </div>
                   </div>
 
                   {/* Jenis Sampah yang Diterima */}
-                  <div className="mt-3 pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-500">
+                  <div className="mt-3 pt-3 border-t border-[#edf0e6] flex flex-wrap items-center justify-between gap-2 text-xs text-slate-500">
                     <span className="text-[11px] text-slate-600 truncate max-w-md">
-                      <strong className="text-slate-700">Terima:</strong> {point.acceptedWaste}
+                      <strong className="text-forest-900">Terima:</strong> {point.acceptedWaste}
                     </span>
                     <span className="text-[11px] font-medium text-slate-500 flex items-center gap-1">
                       <Clock className="w-3 h-3 text-slate-400" />
@@ -232,23 +233,23 @@ export default function MapPage() {
 
         {/* Panel Detail Titik Terpilih (1 Kolom Kanan) */}
         <div>
-          <h2 className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-3">
+          <h2 className="text-xs font-bold text-forest-950 uppercase tracking-wider mb-3">
             Detail Lokasi Terpilih
           </h2>
 
           {selectedPoint ? (
-            <div className="bg-white border border-slate-200 rounded-lg p-5 space-y-4 sticky top-20">
+            <div className="bg-white border border-[#e2e6d8] rounded-2xl p-5 space-y-4 sticky top-20 shadow-xs">
               <div>
                 <span
-                  className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${
+                  className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${
                     selectedPoint.type === 'BANK_SAMPAH'
                       ? 'bg-emerald-100 text-emerald-800'
-                      : 'bg-sky-100 text-sky-800'
+                      : 'bg-teal-100 text-teal-800'
                   }`}
                 >
                   {selectedPoint.type === 'BANK_SAMPAH' ? 'Bank Sampah' : 'TPS 3R'}
                 </span>
-                <h3 className="text-base font-bold text-slate-900 mt-1.5">
+                <h3 className="text-base font-extrabold text-forest-950 mt-1.5">
                   {selectedPoint.name}
                 </h3>
                 <p className="text-xs text-slate-600 mt-1 leading-relaxed">
@@ -256,32 +257,32 @@ export default function MapPage() {
                 </p>
               </div>
 
-              <div className="bg-slate-50 border border-slate-200 rounded p-3 space-y-2 text-xs">
+              <div className="bg-[#f9faf6] border border-[#e4e7dc] rounded-xl p-3.5 space-y-2 text-xs">
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-500">Jarak dari Posisi Anda:</span>
-                  <span className="font-bold text-slate-900">{selectedPoint.formattedDistance}</span>
+                  <span className="text-slate-500 font-medium">Jarak dari Posisi Anda:</span>
+                  <span className="font-extrabold text-forest-950">{selectedPoint.formattedDistance}</span>
                 </div>
                 <div className="flex items-start justify-between gap-2">
-                  <span className="text-slate-500 flex items-center gap-1">
+                  <span className="text-slate-500 flex items-center gap-1 font-medium">
                     <Clock className="w-3.5 h-3.5 text-slate-400" /> Jam Buka:
                   </span>
-                  <span className="font-medium text-slate-800 text-right">{selectedPoint.operationalHours}</span>
+                  <span className="font-semibold text-slate-800 text-right">{selectedPoint.operationalHours}</span>
                 </div>
                 {selectedPoint.phone && (
                   <div className="flex items-center justify-between">
-                    <span className="text-slate-500 flex items-center gap-1">
+                    <span className="text-slate-500 flex items-center gap-1 font-medium">
                       <Phone className="w-3.5 h-3.5 text-slate-400" /> Kontak:
                     </span>
-                    <span className="font-semibold text-slate-800">{selectedPoint.phone}</span>
+                    <span className="font-semibold text-forest-950">{selectedPoint.phone}</span>
                   </div>
                 )}
               </div>
 
               <div>
-                <span className="text-xs font-semibold text-slate-800 block mb-1.5">
+                <span className="text-xs font-bold text-forest-950 block mb-1.5">
                   Material Sampah yang Diterima:
                 </span>
-                <p className="text-xs text-slate-600 bg-slate-50 p-2.5 rounded border border-slate-200/80 leading-relaxed">
+                <p className="text-xs text-slate-600 bg-[#f9faf6] p-3 rounded-xl border border-[#e4e7dc] leading-relaxed">
                   {selectedPoint.acceptedWaste}
                 </p>
               </div>
@@ -291,7 +292,7 @@ export default function MapPage() {
                 href={`https://www.google.com/maps/dir/?api=1&destination=${selectedPoint.latitude},${selectedPoint.longitude}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs py-2.5 rounded transition-colors"
+                className="w-full inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 active:scale-98 text-white font-bold text-xs py-3 rounded-xl transition-all shadow-sm shadow-emerald-700/20"
               >
                 <Navigation className="w-3.5 h-3.5" />
                 Buka Rute di Google Maps
@@ -299,7 +300,7 @@ export default function MapPage() {
               </a>
             </div>
           ) : (
-            <div className="bg-white border border-slate-200 rounded-lg p-6 text-center text-xs text-slate-400">
+            <div className="bg-white border border-[#e2e6d8] rounded-2xl p-8 text-center text-xs text-slate-400">
               Pilih salah satu titik di peta atau daftar untuk melihat detail lengkap.
             </div>
           )}

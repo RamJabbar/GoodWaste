@@ -78,10 +78,28 @@ export interface DropPointItem {
   rawDistanceKm: number;
 }
 
+async function safeFetch(url: string | URL, init?: RequestInit): Promise<Response> {
+  try {
+    return await fetch(url, init);
+  } catch (err: any) {
+    if (
+      err?.name === 'TypeError' ||
+      err?.message?.includes('fetch') ||
+      err?.message?.includes('Failed to fetch') ||
+      err?.message?.includes('NetworkError')
+    ) {
+      throw new Error(
+        `Tidak dapat terhubung ke server backend (${API_URL}). Pastikan backend NestJS telah dijalankan dengan 'npm run start:dev'.`
+      );
+    }
+    throw err;
+  }
+}
+
 export const api = {
   // Auth
   async register(name: string, email: string, password: string) {
-    const res = await fetch(`${API_URL}/api/auth/register`, {
+    const res = await safeFetch(`${API_URL}/api/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, email, password }),
@@ -92,7 +110,7 @@ export const api = {
   },
 
   async login(email: string, password: string) {
-    const res = await fetch(`${API_URL}/api/auth/login`, {
+    const res = await safeFetch(`${API_URL}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
@@ -103,7 +121,7 @@ export const api = {
   },
 
   async getProfile(userId: string): Promise<UserProfile> {
-    const res = await fetch(`${API_URL}/api/auth/profile/${userId}`);
+    const res = await safeFetch(`${API_URL}/api/auth/profile/${userId}`);
     const data = await res.json();
     if (!res.ok) throw new Error(data.message || 'Gagal memuat profil');
     return data;
@@ -114,7 +132,7 @@ export const api = {
     const formData = new FormData();
     formData.append('image', file, fileName);
 
-    const res = await fetch(`${API_URL}/api/scan/upload`, {
+    const res = await safeFetch(`${API_URL}/api/scan/upload`, {
       method: 'POST',
       body: formData,
     });
@@ -132,7 +150,7 @@ export const api = {
     co2Amount: number;
     craftTitle?: string;
   }) {
-    const res = await fetch(`${API_URL}/api/action/execute`, {
+    const res = await safeFetch(`${API_URL}/api/action/execute`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -143,7 +161,7 @@ export const api = {
   },
 
   async getActionHistory(userId: string): Promise<ActionHistoryItem[]> {
-    const res = await fetch(`${API_URL}/api/action/history/${userId}`);
+    const res = await safeFetch(`${API_URL}/api/action/history/${userId}`);
     const data = await res.json();
     if (!res.ok) throw new Error(data.message || 'Gagal memuat riwayat');
     return data;
@@ -152,14 +170,14 @@ export const api = {
   // Rewards
   async getRewards(userId?: string): Promise<RewardItem[]> {
     const url = userId ? `${API_URL}/api/rewards?userId=${userId}` : `${API_URL}/api/rewards`;
-    const res = await fetch(url);
+    const res = await safeFetch(url);
     const data = await res.json();
     if (!res.ok) throw new Error(data.message || 'Gagal memuat hadiah');
     return data;
   },
 
   async redeemReward(userId: string, rewardId: string) {
-    const res = await fetch(`${API_URL}/api/rewards/redeem`, {
+    const res = await safeFetch(`${API_URL}/api/rewards/redeem`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId, rewardId }),
@@ -170,7 +188,7 @@ export const api = {
   },
 
   async getUserVouchers(userId: string): Promise<VoucherItem[]> {
-    const res = await fetch(`${API_URL}/api/rewards/my-vouchers/${userId}`);
+    const res = await safeFetch(`${API_URL}/api/rewards/my-vouchers/${userId}`);
     const data = await res.json();
     if (!res.ok) throw new Error(data.message || 'Gagal memuat voucher');
     return data;
@@ -186,7 +204,7 @@ export const api = {
     if (lat !== undefined && lng !== undefined) {
       url += `?lat=${lat}&lng=${lng}`;
     }
-    const res = await fetch(url);
+    const res = await safeFetch(url);
     const data = await res.json();
     if (!res.ok) throw new Error(data.message || 'Gagal memuat titik buang');
     return data;
